@@ -1,5 +1,5 @@
 # Pathologic 1 dialogue tree extractor
-Anyone who has ever looked up Pathologic's dialogues, may have found [this amazing website](https://pathologicdialogue.github.io/) which has all the dialogues from the different versions of the game separated by languages, games and characters.
+Anyone who has ever looked up Pathologic's dialogues, might have found [this amazing website](https://pathologicdialogue.github.io/) which has all the dialogues from the different versions of the game separated by languages, games and characters.
 And also, if you've ever been involved in the process of (fan) translating Pathologic 1, you will know the pain it is to do so merely because of how unordered the dialogues are.
 <br><br>
 I'm helping with the spanish translation of the game and since spanish is a gendered language and has a formal way of using the second-person singular (usted) such as russian does (Bы), it is quite important to know the context of what you are translating. Looking up said context in that amazing dialogue tree website was... tedious, to say the least.
