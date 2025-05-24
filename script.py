@@ -53,9 +53,9 @@ def	get_dialogue_list(file_name: str) -> list[str]:
 
 def	main_character_dialogues(filename_pattern: str):
 
-	files_en = glob.glob(filename_pattern)
+	files_en = glob.glob("./html_en/%s" %(filename_pattern))
 	files_en.sort()
-	files_ru = glob.glob("../html_ru/%s" %(filename_pattern))
+	files_ru = glob.glob("./html_ru/%s" %(filename_pattern))
 	files_ru.sort()
 	i = 0
 	for current_file in files_en:
@@ -74,6 +74,7 @@ def	main():
 	main_character_dialogues("NPC_Burah_*.html")
 	main_character_dialogues("NPC_Klara_*.html")
 	main_character_dialogues("NPC_Random_*.html")
+	print("done")
 
 if	__name__ == "__main__":
 	main()
