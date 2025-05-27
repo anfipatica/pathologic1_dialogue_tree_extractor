@@ -1,3 +1,9 @@
+import main
+import dialogues_cleaner
+
+FILE = "/home/anfi/Escritorio/pathologic_stuff/pathologic1_dialogue_tree_extractor/dialogues.txt"
+SEPARATOR = "------------------------------------------------------------"
+
 def	get_whole_line(dialogue: list[str], i: int):
 	if i + 1 >= len(dialogue):
 		return
@@ -27,3 +33,11 @@ def	write_dialogue(dialogue_en: list[str], dialogue_ru: list[str]):
 def	write_in_file(file: str, text: str):
 	with open(file, "a") as fd:
 		fd.write(text)
+
+def	create_pdf():
+	open(FILE, "w").close()
+	dialogues_cleaner.main_character_dialogues("NPC_Danko_*.html", None)
+	dialogues_cleaner.main_character_dialogues("NPC_Burah_*.html", None)
+	dialogues_cleaner.main_character_dialogues("NPC_Klara_*.html", None)
+	dialogues_cleaner.main_character_dialogues("NPC_Random_*.html", None)
+	print("done")
