@@ -43,11 +43,9 @@ def	main():
 			execute_query.execute_query(connection)
 		case "4":
 			translator_assistant.start_assisting(connection)
-		case "Q":
-			print("Thanks for using this program :)")
 
+	print("Thanks for using this program :)")
 	connection.close()
-
 
 if	__name__ == "__main__":
 	main()

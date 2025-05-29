@@ -11,13 +11,13 @@ def	print_line(line_info: LineInfo, line_index: int):
 
 	if line_index == CURRENT:
 		print(f"{color.BLUE}╔{"═" * (columns-3)}╗{color.STD}")
-		print(f"{color.BLUE}║ {color.BG_BLUE} {line_info.id[0]}: {line_info.healer[0]} -> {line_info.character[0]}{color.STD}\n{color.BLUE}║")
+		print(f"{color.BLUE}║ {color.BG_BLUE}{color.WHITE} {line_info.id[0]}: {line_info.healer[0]} -> {line_info.character[0]}{color.STD}\n{color.BLUE}║")
 		print("║ En | %s" %(line_info.english[0]))
 		print("║ Ru | %s" %(line_info.russian[0]))
 		print("║ Sp | "+color.STD+"%s" %(line_info.spanish)[0])
 		print(f"{color.BLUE}╚{"═" * (columns-3)}╝{color.STD}")
 	else:
-		print(f"{color.GRAY}| {color.BG_GRAY} {line_info.id[0]}: {line_info.healer[0]} -> {line_info.character[0]}{color.STD}\n{color.GRAY}|")
+		print(f"{color.GRAY}| {color.BG_GRAY}{color.WHITE} {line_info.id[0]}: {line_info.healer[0]} -> {line_info.character[0]}{color.STD}\n{color.GRAY}|")
 		print("| En | %s" %(line_info.english[0]))
 		print("| Ru | %s" %(line_info.russian[0]))
 		print(f"| Sp | {line_info.spanish[0]}{color.STD}\n\n")

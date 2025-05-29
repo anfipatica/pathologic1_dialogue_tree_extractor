@@ -34,13 +34,17 @@ def	set_last_translated_line(last_line_id: int):
 		file.write(str(last_line_id))
 
 def	try_execute_and_fetchone(cursor: sqlite3.Cursor, query: str, parameter: tuple) -> tuple:
+	query_result: tuple
 
 	try:
 		cursor.execute(query, parameter)
 	except sqlite3.Error as e:
 		print(e)
-		return (None)
-	return (cursor.fetchone())
+		return ((None,))
+	query_result = cursor.fetchone()
+	if (not query_result):
+		return ((None,))
+	return (query_result)
 
 def	try_execute_and_fetchall(cursor: sqlite3.Cursor, query: str, parameter: tuple) -> list:
 
