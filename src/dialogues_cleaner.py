@@ -6,7 +6,7 @@ from typing import TextIO
 import db_creator
 import pdf_creator
 
-DIALOGUES_PATH = "/home/anfi/Escritorio/pathologic_stuff/pathologic1_dialogue_tree_extractor/dialogues_html/"
+DIALOGUES_PATH = "/home/anfi/Desktop/pathologic_stuff/pathologic1_dialogue_tree_extractor/dialogues_html/"
 
 #find a line inside a text file
 def	find_line(file: TextIO, pattern: str ) -> str:

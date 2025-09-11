@@ -1,7 +1,7 @@
 import main
 import dialogues_cleaner
 
-FILE = "/home/anfi/Escritorio/pathologic_stuff/pathologic1_dialogue_tree_extractor/dialogues.txt"
+FILE = "/home/anfi/Desktop/pathologic_stuff/pathologic1_dialogue_tree_extractor/dialogues.txt"
 SEPARATOR = "------------------------------------------------------------"
 
 def	get_whole_line(dialogue: list[str], i: int):

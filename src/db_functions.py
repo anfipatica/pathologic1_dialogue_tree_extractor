@@ -3,8 +3,8 @@ import sqlite3
 STD='\033[0m'
 RED='\033[31m'
 
-DB_PATH = "/home/anfi/Escritorio/pathologic_stuff/pathologic1_dialogue_tree_extractor/database/patho.db"
-LAST_TRANSLATED_LINE_PATH = "/home/anfi/Escritorio/pathologic_stuff/pathologic1_dialogue_tree_extractor/database/.last_translated_line.txt"
+DB_PATH = "/home/anfi/Desktop/pathologic_stuff/pathologic1_dialogue_tree_extractor/database/patho.db"
+LAST_TRANSLATED_LINE_PATH = "/home/anfi/Desktop/pathologic_stuff/pathologic1_dialogue_tree_extractor/database/.last_translated_line.txt"
 def	create_connection() -> sqlite3.Connection:
 	connection = sqlite3.connect(DB_PATH)
 	# cursor = connection.cursor()
