@@ -6,6 +6,8 @@ import db_creator
 import db_functions as db
 import translator_assistant
 import execute_query
+import db_to_text
+import git_upload
 
 STD='\033[39m'
 GRAY='\033[90m'
@@ -20,10 +22,11 @@ def	main_menu() -> str:
 	print("2) Create or update the database")
 	print("3) Make a query")
 	print("4) Use the translation assistant")
+	print("5) Extract database as translation file")
 	print("Q) quit\n")
 
 	user_input = input(">> ")
-	if (not user_input or "1234Qq".find(user_input) == -1):
+	if (not user_input or "12345Qq".find(user_input) == -1):
 		print(RED+">> Invalid option"+STD)
 		os.system("sleep 1")
 		return(main_menu())
@@ -43,9 +46,14 @@ def	main():
 			execute_query.execute_query(connection)
 		case "4":
 			translator_assistant.start_assisting(connection)
+		case "5":
+			db_to_text.db_to_text(connection)
 
 	print("Thanks for using this program :)")
 	connection.close()
+	git_upload.upload_to_github()
+
+
 
 if	__name__ == "__main__":
 	main()

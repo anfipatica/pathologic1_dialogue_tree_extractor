@@ -120,6 +120,7 @@ def	translate_line(connection: sqlite3.Connection, current_line: int) -> int:
 		return 0
 
 
+
 # 527581 -> current first line id, until program isnt fully functional further updates will
 # need to be revised.
 def start_assisting(connection: sqlite3.Connection):

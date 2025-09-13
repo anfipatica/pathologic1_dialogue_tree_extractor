@@ -3,7 +3,12 @@ import shutil
 import utils.colors as color
 import classes.LineInfo as LineInfo
 
+from russian_pronouns import highlight_rusian_pronouns
+
 CURRENT=2
+
+
+
 
 def	print_line(line_info: LineInfo, line_index: int):
 
@@ -13,7 +18,7 @@ def	print_line(line_info: LineInfo, line_index: int):
 		print(f"{color.BLUE}╔{"═" * (columns-3)}╗{color.STD}")
 		print(f"{color.BLUE}║ {color.BG_BLUE}{color.WHITE} {line_info.id[0]}: {line_info.healer[0]} -> {line_info.character[0]}{color.STD}\n{color.BLUE}║")
 		print("║ En | %s" %(line_info.english[0]))
-		print("║ Ru | %s" %(line_info.russian[0]))
+		print(f"║ Ru | %s" %(highlight_rusian_pronouns(line_info.russian[0])))
 		print("║ Sp | "+color.STD+"%s" %(line_info.spanish)[0])
 		print(f"{color.BLUE}╚{"═" * (columns-3)}╝{color.STD}")
 	else:
