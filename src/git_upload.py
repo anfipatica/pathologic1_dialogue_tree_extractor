@@ -6,7 +6,7 @@ def	upload_to_github():
 	repo: git.Repo
 	origin: git.Remote
 
-	print(f"{colors.GREEN}\n\n-> Uploading the changes to github.")
+	print(f"{colors.GREEN}\n\n-> Uploading the changes to github.", end="")
 	try:
 		repo = git.Repo(".")
 		origin = repo.remote("origin")
@@ -17,13 +17,11 @@ def	upload_to_github():
 
 		if (family == 0):
 			origin.push()
-			print(f"{colors.CYAN}acabose\n")
 			return ()
 		else:
 			while (os.waitpid(family, os.WNOHANG)[0] == 0):
-				print("esperando")
-				os.system("sleep 1")
-			print("y... murió")
-
+				print(".",end="")
+				os.system("usleep 1000")
+			print(f"{colors.STD}")
 	except:
 		print(f"{colors.RED}Something went wrong while uploading the changes to github.{colors.STD}")

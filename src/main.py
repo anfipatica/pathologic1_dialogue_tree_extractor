@@ -49,9 +49,9 @@ def	main():
 		case "5":
 			db_to_text.db_to_text(connection)
 
-	print("Thanks for using this program :)")
 	connection.close()
 	git_upload.upload_to_github()
+	print("Thanks for using this program :)")
 
 
 
