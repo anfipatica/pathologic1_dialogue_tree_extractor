@@ -46,7 +46,7 @@ def	main():
 		case "3":
 			execute_query.execute_query(connection)
 		case "4":
-			translator_assistant.start_assisting(connection)
+			translator_assistant.start_translation_program(connection)
 		case "5":
 			db_to_text.db_to_text(connection)
 

@@ -1,18 +1,23 @@
 import sqlite3
 import translation_program.db_functions as db
-import readline
 import os
 
 import utils.colors as color
 import classes.LineInfo as LineInfo
 import line_printers
-from pynput import keyboard
+import	translation_program.key_hook_functions as hooks
 
-CURRENT=2
-#527567
+
 
 def	get_line_by_id(id: int, connection: sqlite3.Connection) -> LineInfo:
-
+	'''
+	Args:
+		id (int): The line's id
+		connection (sqlite3.Connection): The DB connection.
+	Returns:
+		line_info (LineInfo):
+			An instance of the class LineInfo, holding all the DB information of that id's line.
+	'''
 	cursor: sqlite3.Connection = connection.cursor()
 	line_info: LineInfo.LineInfo = LineInfo.LineInfo()
 
@@ -29,6 +34,8 @@ def	get_line_by_id(id: int, connection: sqlite3.Connection) -> LineInfo:
 	cursor.close()
 	return (line_info)
 
+
+
 def	update_spanish_line(connection: sqlite3.Connection, line_info: LineInfo.LineInfo):
 
 	cursor = connection.cursor()
@@ -37,6 +44,7 @@ def	update_spanish_line(connection: sqlite3.Connection, line_info: LineInfo.Line
 		cursor.execute("UPDATE pathologic SET spanish=? WHERE id=?", (line_info.spanish[0] ,line_info.id[0]))
 	except sqlite3.Error as e:
 		print(e)
+
 
 
 def	ask_confirmation() -> str:
@@ -51,89 +59,62 @@ def	ask_confirmation() -> str:
 	return (user_input.upper())
 
 
-NOT_ACTIVATED=0
-CTRL_LEFT=-1
-CTRL_RIGHT=1
+
+
+def	await_for_translated_line() -> tuple[str,]:
+	with hooks.keyboard.Listener(on_press=hooks.ft_on_press, on_release=hooks.ft_on_release):
+		return (tuple((input(">> "),)))
+
 
 LINE_COMMITED=1
 EXIT=-2
-
-hotkey_activated: int = NOT_ACTIVATED
-ctrl_pressed: bool = False
-
-
-def	ft_on_press(key: keyboard.Key):
-	global ctrl_pressed
-	global hotkey_activated
-	if key == keyboard.Key.ctrl:
-		ctrl_pressed = True
-	elif (ctrl_pressed == True):
-		if key == keyboard.Key.left:
-			hotkey_activated = CTRL_LEFT
-			keyboard_ = keyboard.Controller()
-			keyboard_.type("\n")
-		if key == keyboard.Key.right:
-			hotkey_activated = CTRL_RIGHT
-			keyboard_ = keyboard.Controller()
-			keyboard_.type("\n")
-def	ft_on_release(key: keyboard.Key):
-	global ctrl_pressed
-	global hotkey_activated
-	if (key == keyboard.Key.ctrl):
-		ctrl_pressed = False
-		hotkey_activated = NOT_ACTIVATED
-	elif ((key == keyboard.Key.left or key == keyboard.Key.right) and hotkey_activated != NOT_ACTIVATED):
-		hotkey_activated = NOT_ACTIVATED
-
+CURRENT_LINE=2
+#527567
 
 def	translate_line(connection: sqlite3.Connection, current_line: int) -> int:
 	line_info: list[LineInfo.LineInfo] = [None] * 5
 
 	os.system("clear")
 
-	line_info[0] = get_line_by_id(current_line - 2, connection)
-	line_info[1] = get_line_by_id(current_line - 1, connection)
-	line_info[CURRENT] = get_line_by_id(current_line, connection)
-	line_info[3] = get_line_by_id(current_line + 1, connection)
-	line_info[4] = get_line_by_id(current_line + 2, connection)
+	line_info[0]			= get_line_by_id(current_line - 2, connection)
+	line_info[1]			= get_line_by_id(current_line - 1, connection)
+	line_info[CURRENT_LINE] = get_line_by_id(current_line, connection)
+	line_info[3]			= get_line_by_id(current_line + 1, connection)
+	line_info[4]			= get_line_by_id(current_line + 2, connection)
 
 	line_printers.print_lines(line_info)
-	with keyboard.Listener(on_press=ft_on_press, on_release=ft_on_release) as listener:
-		line_info[CURRENT].spanish = tuple((input(">> "),))
-
-	print(hotkey_activated)
-	print(ctrl_pressed)
-	if (hotkey_activated != NOT_ACTIVATED):
-		return (hotkey_activated)
-	if (line_info[CURRENT].spanish[0] == "q"):
+	line_info[CURRENT_LINE].spanish = await_for_translated_line()
+	if (hooks.hotkey_activated != hooks.NOT_ACTIVATED):
+		return (hooks.hotkey_activated)
+	if (line_info[CURRENT_LINE].spanish[0].lower() == "q"):
 		return (EXIT)
 
-	update_spanish_line(connection, line_info[CURRENT])
+	update_spanish_line(connection, line_info[CURRENT_LINE])
 
 	os.system("clear")
-	line_printers.print_line(line_info[CURRENT], CURRENT)
+	line_printers.print_line(line_info[CURRENT_LINE], CURRENT_LINE)
 	if (ask_confirmation() == "Y"):
 		connection.commit()
 		return 1
 	else:
 		print("Making a rollback...")
 		connection.rollback()
-		line_info[CURRENT].spanish = db.try_execute_and_fetchone(connection.cursor(), "SELECT spanish FROM pathologic WHERE id=?", line_info[CURRENT].id)
+		line_info[CURRENT_LINE].spanish = db.try_execute_and_fetchone(connection.cursor(), "SELECT spanish FROM pathologic WHERE id=?", line_info[CURRENT_LINE].id)
 		return 0
 
 
 
 # 527581 -> current first line id, until program isnt fully functional further updates will
 # need to be revised.
-def start_assisting(connection: sqlite3.Connection):
+def start_translation_program(connection: sqlite3.Connection):
 	translate_line_result: int
 
 	while True:
 		current_line: int = db.get_last_translated_line()
 		translate_line_result = translate_line(connection, current_line)
-		if (translate_line_result == CTRL_RIGHT or translate_line_result == LINE_COMMITED):
+		if (translate_line_result == hooks.CTRL_RIGHT or translate_line_result == LINE_COMMITED):
 			db.set_last_translated_line(current_line + 1)
-		elif (translate_line_result == CTRL_LEFT):
+		elif (translate_line_result == hooks.CTRL_LEFT):
 			db.set_last_translated_line(current_line - 1)
 		elif (translate_line_result == -2): #EXIT CASE, NOT DONE YET
 			return

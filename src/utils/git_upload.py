@@ -6,7 +6,7 @@ def	upload_to_github():
 	repo: git.Repo
 	origin: git.Remote
 
-	print(f"{colors.GREEN}\n\n-> Uploading the changes to github.", end="")
+	print(f"{colors.GREEN}\n\n-> Uploading the changes to github...{colors.STD}")
 	try:
 		repo = git.Repo(".")
 		origin = repo.remote("origin")

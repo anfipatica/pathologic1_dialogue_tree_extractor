@@ -33,9 +33,11 @@ This function returns the index of the last translated line saved in a hidden fi
 		last_line_id = int(file.read())
 	return(last_line_id)
 
+
 def	set_last_translated_line(last_line_id: int):
 	with open(LAST_TRANSLATED_LINE_PATH, "w") as file:
 		file.write(str(last_line_id))
+
 
 def	try_execute_and_fetchone(cursor: sqlite3.Cursor, query: str, parameter: tuple) -> tuple:
 	query_result: tuple
@@ -49,6 +51,7 @@ def	try_execute_and_fetchone(cursor: sqlite3.Cursor, query: str, parameter: tupl
 	if (not query_result):
 		return ((None,))
 	return (query_result)
+
 
 def	try_execute_and_fetchall(cursor: sqlite3.Cursor, query: str, parameter: tuple) -> list:
 
@@ -65,5 +68,3 @@ def	try_execute_and_fetchall(cursor: sqlite3.Cursor, query: str, parameter: tupl
 			print(f"{RED}{e}{STD}")
 			return(None)
 	return(cursor.fetchall())
-
-
