@@ -20,7 +20,7 @@ def	upload_to_github():
 			os.system("sleep 1")
 		else:
 			while (os.waitpid(family, os.WNOHANG)[0] == 0):
-				print(".",end=" ")
+				print(".")
 				os.system("sleep 0.5")
 			print(f"{colors.STD}")
 	except:
