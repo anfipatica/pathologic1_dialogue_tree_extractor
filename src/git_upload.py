@@ -16,10 +16,11 @@ def	upload_to_github():
 		state: bool = False
 
 		if (family == 0):
-			while (state == False):
-				print(state)
-		else:
 			origin.push()
-			state = True
+		else:
+			while (os.WIFEXITED(family) == False):
+				print("my hijo sigue corriendo...")
+			print("y... murió")
+
 	except:
 		print(f"{colors.RED}Something went wrong while uploading the changes to github.{colors.STD}")
