@@ -17,10 +17,10 @@ def	upload_to_github():
 
 		if (family == 0):
 			origin.push()
-			return ()
+			os.system("sleep 1")
 		else:
 			while (os.waitpid(family, os.WNOHANG)[0] == 0):
-				print(".",end="")
+				print(".",end=" ")
 				os.system("sleep 0.5")
 			print(f"{colors.STD}")
 	except:
