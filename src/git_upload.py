@@ -19,8 +19,8 @@ def	upload_to_github():
 			origin.push()
 			print(f"{colors.CYAN}acabose\n")
 		else:
-			while (os.WIFEXITED(family) == False):
-				print(os.WIFEXITED(family))
+			print(os.waitpid(family, os.WNOHANG))
+			print("esperando")
 			print("y... murió")
 
 	except:
