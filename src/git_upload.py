@@ -21,7 +21,7 @@ def	upload_to_github():
 		else:
 			while (os.waitpid(family, os.WNOHANG)[0] == 0):
 				print(".",end="")
-				os.system("usleep 1000")
+				os.system("sleep 0.5")
 			print(f"{colors.STD}")
 	except:
 		print(f"{colors.RED}Something went wrong while uploading the changes to github.{colors.STD}")
