@@ -11,15 +11,16 @@ def	upload_to_github():
 		repo = git.Repo(".")
 		origin = repo.remote("origin")
 		repo.git.add(".")
-		repo.index.commit("uploading to github from python script...")
+		repo.index.commit("uploading to github from python scriptAAAAAAAAA...")
 		family = os.fork()
 		state: bool = False
 
 		if (family == 0):
 			origin.push()
+			print(f"{colors.CYAN}acabose\n")
 		else:
 			while (os.WIFEXITED(family) == False):
-				print("my hijo sigue corriendo...")
+				print(os.WIFEXITED(family))
 			print("y... murió")
 
 	except:
