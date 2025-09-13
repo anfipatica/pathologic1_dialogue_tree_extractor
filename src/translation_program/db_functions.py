@@ -22,7 +22,11 @@ def	create_connection() -> sqlite3.Connection:
 
 	return (connection)
 
+
 def	get_last_translated_line() -> int:
+	'''
+This function returns the index of the last translated line saved in a hidden file
+'''
 	last_line_id: int
 
 	with open(LAST_TRANSLATED_LINE_PATH) as file:

@@ -1,5 +1,5 @@
 import sqlite3
-import db_functions as db
+import translation_program.db_functions as db
 import readline
 import os
 
@@ -10,6 +10,7 @@ from pynput import keyboard
 
 CURRENT=2
 #527567
+
 def	get_line_by_id(id: int, connection: sqlite3.Connection) -> LineInfo:
 
 	cursor: sqlite3.Connection = connection.cursor()
@@ -83,6 +84,7 @@ def	ft_on_release(key: keyboard.Key):
 		hotkey_activated = NOT_ACTIVATED
 	elif ((key == keyboard.Key.left or key == keyboard.Key.right) and hotkey_activated != NOT_ACTIVATED):
 		hotkey_activated = NOT_ACTIVATED
+
 
 def	translate_line(connection: sqlite3.Connection, current_line: int) -> int:
 	line_info: list[LineInfo.LineInfo] = [None] * 5

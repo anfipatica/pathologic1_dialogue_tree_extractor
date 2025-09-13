@@ -3,15 +3,16 @@ import sqlite3
 
 import pdf_creator
 import db_creator
-import db_functions as db
-import translator_assistant
+import translation_program.db_functions as db
+import translation_program.translator_assistant as translator_assistant
 import execute_query
 import db_to_text
-import git_upload
+import utils.git_upload as git_upload
 
 STD='\033[39m'
 GRAY='\033[90m'
 RED='\033[31m'
+
 
 def	main_menu() -> str:
 	user_input: str
@@ -21,7 +22,7 @@ def	main_menu() -> str:
 	print("1) Extract dialogues as a pdf")
 	print("2) Create or update the database")
 	print("3) Make a query")
-	print("4) Use the translation assistant")
+	print("4) Use the translation program")
 	print("5) Extract database as translation file")
 	print("Q) quit\n")
 
@@ -51,8 +52,8 @@ def	main():
 
 	connection.close()
 	git_upload.upload_to_github()
-	print("Thanks for using this program :)")
 
+	print("Thanks for using this program :)")
 
 
 if	__name__ == "__main__":

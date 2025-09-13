@@ -1,6 +1,6 @@
 import os
 import sqlite3
-import db_functions as db
+import translation_program.db_functions as db
 
 STD='\033[0m'
 GRAY='\033[90m'
