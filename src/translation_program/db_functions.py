@@ -22,6 +22,7 @@ def	create_connection() -> sqlite3.Connection:
 
 	return (connection)
 
+#CREATE TABLE lines_per_day(id INT PRIMARY KEY, date DATE DEFAULT CURRENT_DATE, lines INT)
 
 def	get_last_translated_line() -> int:
 	'''
@@ -42,11 +43,18 @@ def	set_last_translated_line(last_line_id: int):
 def	try_execute_and_fetchone(cursor: sqlite3.Cursor, query: str, parameter: tuple) -> tuple:
 	query_result: tuple
 
-	try:
-		cursor.execute(query, parameter)
-	except sqlite3.Error as e:
-		print(e)
-		return ((None,))
+	if (parameter == None):
+		try:
+			cursor.execute(query)
+		except sqlite3.Error as e:
+			print(e)
+			return ((None,))
+	else :
+		try:
+			cursor.execute(query, parameter)
+		except sqlite3.Error as e:
+			print(e)
+			return ((None,))
 	query_result = cursor.fetchone()
 	if (not query_result):
 		return ((None,))

@@ -4,11 +4,11 @@ def get_pronouns_list()-> tuple[list[str], list[str]]:
 
 	formal_pronouns = [
 		# Personal
-		"вы",        # nominativo
-		"вас",       # genitivo / acusativo
-		"вам",       # dativo
-		"вами",      # instrumental
-		"о вас",     # prepositivo
+		"вы", "Вы",    # nominativo
+		"вас", "Вас",  # genitivo / acusativo
+		"вам", "Вам",  # dativo
+		"вами", "Вами", # instrumental
+		"о вас", "О вас",# prepositivo
 		# Posesivos
 		"ваш",       # masc. sing.
 		"ваша",      # fem. sing.
@@ -25,12 +25,12 @@ def get_pronouns_list()-> tuple[list[str], list[str]]:
 
 	informal_pronouns = [
 		# Personal
-		"ты",       # nominativo
-		"тебя",     # genitivo / acusativo
-		"тебе",     # dativo
-		"тобой",    # instrumental
-		"тобою",    # instrumental (forma alternativa, más literaria)
-		"о тебе",   # prepositivo
+		"ты", "Ты",      # nominativo
+		"тебя", "Тебя",     # genitivo / acusativo
+		"тебе", "Тебе",     # dativo
+		"тобой", "Тобой",    # instrumental
+		"тобою", "Тобою",    # instrumental (forma alternativa, más literaria)
+		"о тебе", "О тебе",   # prepositivo
 		# Posesivos
 		"твой",     # masc. sing.
 		"твоя",     # fem. sing.

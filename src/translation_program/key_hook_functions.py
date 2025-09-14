@@ -1,8 +1,7 @@
 from pynput import keyboard
-
+from classes.TranslationStates import TranslationStates as translation_states
 NOT_ACTIVATED=0
-CTRL_LEFT=-1
-CTRL_RIGHT=1
+
 
 hotkey_activated: int = NOT_ACTIVATED
 ctrl_pressed: bool = False
@@ -15,11 +14,11 @@ def	ft_on_press(key: keyboard.Key):
 		ctrl_pressed = True
 	elif (ctrl_pressed == True):
 		if key == keyboard.Key.left:
-			hotkey_activated = CTRL_LEFT
+			hotkey_activated = translation_states.CTRL_LEFT
 			keyboard_ = keyboard.Controller()
 			keyboard_.type("\n")
 		if key == keyboard.Key.right:
-			hotkey_activated = CTRL_RIGHT
+			hotkey_activated = translation_states.CTRL_RIGHT
 			keyboard_ = keyboard.Controller()
 			keyboard_.type("\n")
 

@@ -7,7 +7,9 @@ import translation_program.db_functions as db
 import translation_program.translator_assistant as translator_assistant
 import execute_query
 import db_to_text
-import utils.git_upload as git_upload
+from translation_program import lines_per_day_queries as lines_queries
+from utils.git_upload import upload_to_github
+
 
 STD='\033[39m'
 GRAY='\033[90m'
@@ -37,6 +39,7 @@ def	main_menu() -> str:
 def	main():
 	user_choice: str = main_menu().upper()
 	connection: sqlite3.Connection = db.create_connection()
+	lines_queries.update_lines_per_day(connection, 0)
 
 	match user_choice:
 		case "1":
@@ -50,9 +53,10 @@ def	main():
 		case "5":
 			db_to_text.db_to_text(connection)
 
-	connection.close()
-	git_upload.upload_to_github()
 
+	upload_to_github()
+	lines_queries.print_total_translated_lines(connection)
+	connection.close()
 	print("Thanks for using this program :)")
 
 

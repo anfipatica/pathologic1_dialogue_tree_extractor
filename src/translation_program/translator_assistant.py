@@ -6,8 +6,8 @@ import utils.colors as color
 import classes.LineInfo as LineInfo
 import line_printers
 import	translation_program.key_hook_functions as hooks
-
-
+from classes.TranslationStates import TranslationStates as translation_states
+from translation_program import lines_per_day_queries as lines_queries
 
 def	get_line_by_id(id: int, connection: sqlite3.Connection) -> LineInfo:
 	'''
@@ -37,7 +37,7 @@ def	get_line_by_id(id: int, connection: sqlite3.Connection) -> LineInfo:
 
 
 def	update_spanish_line(connection: sqlite3.Connection, line_info: LineInfo.LineInfo):
-
+	'''Will update the database with the new translated line :D'''
 	cursor = connection.cursor()
 	try:
 		print(line_info.spanish)
@@ -65,9 +65,6 @@ def	await_for_translated_line() -> tuple[str,]:
 	with hooks.keyboard.Listener(on_press=hooks.ft_on_press, on_release=hooks.ft_on_release):
 		return (tuple((input(">> "),)))
 
-
-LINE_COMMITED=1
-EXIT=-2
 CURRENT_LINE=2
 #527567
 
@@ -84,10 +81,12 @@ def	translate_line(connection: sqlite3.Connection, current_line: int) -> int:
 
 	line_printers.print_lines(line_info)
 	line_info[CURRENT_LINE].spanish = await_for_translated_line()
+
+	#Exit before commiting if hotkey was activated or if the user specified to exit
 	if (hooks.hotkey_activated != hooks.NOT_ACTIVATED):
 		return (hooks.hotkey_activated)
 	if (line_info[CURRENT_LINE].spanish[0].lower() == "q"):
-		return (EXIT)
+		return (translation_states.EXIT)
 
 	update_spanish_line(connection, line_info[CURRENT_LINE])
 
@@ -104,17 +103,23 @@ def	translate_line(connection: sqlite3.Connection, current_line: int) -> int:
 
 
 
+
 # 527581 -> current first line id, until program isnt fully functional further updates will
 # need to be revised.
 def start_translation_program(connection: sqlite3.Connection):
-	translate_line_result: int
-
-	while True:
+	translate_line_result: int = translation_states.START
+	total_lines_translated: int = 0
+	while translate_line_result != translation_states.EXIT:
 		current_line: int = db.get_last_translated_line()
 		translate_line_result = translate_line(connection, current_line)
-		if (translate_line_result == hooks.CTRL_RIGHT or translate_line_result == LINE_COMMITED):
+		if (translate_line_result == translation_states.LINE_COMMITED):
+			total_lines_translated += translation_states.LINE_COMMITED
 			db.set_last_translated_line(current_line + 1)
-		elif (translate_line_result == hooks.CTRL_LEFT):
+		elif (translate_line_result == translation_states.CTRL_RIGHT):
+			db.set_last_translated_line(current_line + 1)
+		elif (translate_line_result == translation_states.CTRL_LEFT):
 			db.set_last_translated_line(current_line - 1)
-		elif (translate_line_result == -2): #EXIT CASE, NOT DONE YET
-			return
+
+	if (total_lines_translated > 0):
+		lines_queries.update_lines_per_day(connection, total_lines_translated)
+

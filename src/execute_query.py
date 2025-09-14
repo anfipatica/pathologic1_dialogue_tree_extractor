@@ -32,9 +32,9 @@ def	execute_query(connection: sqlite3.Connection):
 			for result in query_results:
 				print(result)
 
-def	execute_query(connection: sqlite3.Connection, query: str) -> list:
-	cursor: sqlite3.Cursor = connection.cursor()
-	query_results: list
+# def	execute_query(connection: sqlite3.Connection, query: str) -> list:
+# 	cursor: sqlite3.Cursor = connection.cursor()
+# 	query_results: list
 
-	query_results = db.try_execute_and_fetchall(cursor, query, None)
-	return (query_results)
+# 	query_results = db.try_execute_and_fetchall(cursor, query, None)
+# 	return (query_results)
