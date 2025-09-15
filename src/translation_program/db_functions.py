@@ -26,8 +26,8 @@ def	create_connection() -> sqlite3.Connection:
 
 def	get_last_translated_line() -> int:
 	'''
-This function returns the index of the last translated line saved in a hidden file
-'''
+	This function RETURNS the index of the last translated line saved in a hidden file
+	'''
 	last_line_id: int
 
 	with open(LAST_TRANSLATED_LINE_PATH) as file:
@@ -36,6 +36,9 @@ This function returns the index of the last translated line saved in a hidden fi
 
 
 def	set_last_translated_line(last_line_id: int):
+	'''
+	This function REWRITES the index of the last translated line saved in a hidden file
+	'''
 	with open(LAST_TRANSLATED_LINE_PATH, "w") as file:
 		file.write(str(last_line_id))
 

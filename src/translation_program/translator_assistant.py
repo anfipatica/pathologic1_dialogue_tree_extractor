@@ -65,10 +65,25 @@ def	await_for_translated_line() -> tuple[str,]:
 	with hooks.keyboard.Listener(on_press=hooks.ft_on_press, on_release=hooks.ft_on_release):
 		return (tuple((input(">> "),)))
 
+
+
+
 CURRENT_LINE=2
-#527567
 
 def	translate_line(connection: sqlite3.Connection, current_line: int) -> int:
+	'''
+	Args:
+		connection (sqlite3.Connection): The DB connection
+		current_line (int): The id of the line to translate.
+	Returns:
+		translation_states (int): The state in which the translation of this line ended.
+		It can be:
+		- LINE_COMMITED: The line was correctly translated.
+		- NO_COMMIT: The user decided not to commit the translated line.
+		- EXIT: The user specified the exit option.
+		- hotkey_activated (CTRL_LEFT || CTRL_RIGHT): The user used a hotkey
+			to change the line to translate.
+	'''
 	line_info: list[LineInfo.LineInfo] = [None] * 5
 
 	os.system("clear")
@@ -94,19 +109,23 @@ def	translate_line(connection: sqlite3.Connection, current_line: int) -> int:
 	line_printers.print_line(line_info[CURRENT_LINE], CURRENT_LINE)
 	if (ask_confirmation() == "Y"):
 		connection.commit()
-		return 1
+		return translation_states.LINE_COMMITED
 	else:
 		print("Making a rollback...")
 		connection.rollback()
 		line_info[CURRENT_LINE].spanish = db.try_execute_and_fetchone(connection.cursor(), "SELECT spanish FROM pathologic WHERE id=?", line_info[CURRENT_LINE].id)
-		return 0
+		return translation_states.NO_COMMIT
 
 
 
 
-# 527581 -> current first line id, until program isnt fully functional further updates will
-# need to be revised.
+
 def start_translation_program(connection: sqlite3.Connection):
+	'''
+	This is the core function of the translation program. It will continually analyze the
+	user input set in translate_line() and based on it updates the "database/.last_translated_line.txt"
+	which holds the ID of the current dialogue.
+	'''
 	translate_line_result: int = translation_states.START
 	total_lines_translated: int = 0
 	while translate_line_result != translation_states.EXIT:
