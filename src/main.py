@@ -54,7 +54,7 @@ def	main():
 			db_to_text.db_to_text(connection)
 
 
-	upload_to_github()
+	#upload_to_github()
 	lines_queries.print_total_translated_lines(connection)
 	connection.close()
 	print("Thanks for using this program :)")

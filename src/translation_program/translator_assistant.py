@@ -8,6 +8,7 @@ import line_printers
 import	translation_program.key_hook_functions as hooks
 from classes.TranslationStates import TranslationStates as translation_states
 from translation_program import lines_per_day_queries as lines_queries
+import readline
 
 def	get_line_by_id(id: int, connection: sqlite3.Connection) -> LineInfo:
 	'''
