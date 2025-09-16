@@ -12,6 +12,7 @@ def get_pronouns_list()-> tuple[list[str], list[str]]:
 		# Posesivos
 		"ваш",       # masc. sing.
 		"ваша",      # fem. sing.
+		"вашу",
 		"ваше",      # neutro sing.
 		"ваши",      # plural
 		# Posesivos declinados
@@ -34,6 +35,7 @@ def get_pronouns_list()-> tuple[list[str], list[str]]:
 		# Posesivos
 		"твой",     # masc. sing.
 		"твоя",     # fem. sing.
+		"твою",
 		"твоё",     # neutro sing.
 		"твои",     # plural
 		# Posesivos declinados (ejemplos comunes)
